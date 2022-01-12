@@ -21,6 +21,8 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { OrdenIngresoPipe } from './pipes/orden-ingreso.pipe';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
+    OrdenIngresoPipe,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +51,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       maxAge: 25,
       logOnly: environment.production,
     }),
+    NgChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

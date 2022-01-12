@@ -1,3 +1,4 @@
+import { unsetItems } from './../ingreso-egreso/ingreso-egreso.actions';
 import { setUser, unSetuser } from './../auth/auth.actions';
 import { AppState } from './../app.reducer';
 import { Store } from '@ngrx/store';
@@ -12,6 +13,7 @@ import { map, Subscription } from 'rxjs';
 })
 export class AuthService {
   authSubscription: Subscription;
+  private _user: Usuario;
 
   constructor(
     private auth: AngularFireAuth,
@@ -27,14 +29,16 @@ export class AuthService {
           .valueChanges()
           .subscribe((firestoreUser: any) => {
             const tmpUser = Usuario.fromFirebase(firestoreUser);
+            this._user = tmpUser;
             this.store.dispatch(setUser({ user: tmpUser }));
           });
       } else {
-        console.log('llamando al unsubscribe');
         if (this.authSubscription) {
           this.authSubscription.unsubscribe();
         }
+        this._user = null;
         this.store.dispatch(unSetuser());
+        this.store.dispatch(unsetItems());
       }
     });
   }
@@ -58,5 +62,9 @@ export class AuthService {
 
   isAuth() {
     return this.auth.authState.pipe(map((fuser) => fuser != null));
+  }
+
+  get user() {
+    return { ...this._user };
   }
 }

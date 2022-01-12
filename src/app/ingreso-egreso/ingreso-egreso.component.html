@@ -5,10 +5,11 @@
         <h4 class="card-title">Agregar Ingreso / Egreso</h4>
         <p class="card-description">Especifique el monto y el tipo</p>
 
-        <form>
+        <form [formGroup]="ingresoForm">
           <div class="form-group">
             <label>Descripción</label>
             <input
+              formControlName="descripcion"
               type="text"
               class="form-control"
               placeholder="Descripción"
@@ -19,6 +20,7 @@
           <div class="form-group">
             <label>Monto</label>
             <input
+              formControlName="monto"
               type="number"
               class="form-control"
               placeholder="Monto"
@@ -30,24 +32,40 @@
           <div class="form-group">
             <label>Tipo</label>
             <br />
-            <button type="button" class="btn btn-primary btn-block">
+            <button
+              (click)="toggleTipo('ingreso')"
+              type="button"
+              class="btn btn-primary btn-block"
+            >
+              <i *ngIf="tipo === 'ingreso'" class="fa fa-check"></i>
               Ingreso
             </button>
-            <!-- <button type="button" class="btn btn-warning btn-block">Egreso</button> -->
+            <button
+              (click)="toggleTipo('egreso')"
+              type="button"
+              class="btn btn-warning btn-block"
+            >
+              <i *ngIf="tipo !== 'ingreso'" class="fa fa-check"></i>
+              Egreso
+            </button>
           </div>
 
           <hr />
-          <button type="button" class="btn btn-success mr-2">
+          <button
+            (click)="submitForm()"
+            *ngIf="!cargando"
+            [disabled]="ingresoForm.invalid"
+            type="button"
+            class="btn btn-success mr-2"
+          >
             <i class="fa fa-save"></i>
             Agregar
           </button>
 
-          <!-- 
-                <button disabled class="btn btn-success mr-2">
-                  <i class="fa fa-spin fa-sync"></i>
-                  Espere por favor...
-                </button> 
-              -->
+          <button *ngIf="cargando" disabled class="btn btn-success mr-2">
+            <i class="fa fa-spin fa-sync"></i>
+            Espere por favor...
+          </button>
 
           <button type="reset" class="btn btn-light">Cancelar</button>
         </form>
