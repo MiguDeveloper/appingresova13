@@ -9,11 +9,11 @@ import {
 export interface AppState {
   ui: State;
   user: AuthState;
-  ingresosEgresos: IngEgreState;
+  //ingresosEgresos: IngEgreState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
   ui: uiReducer,
   user: authReducer,
-  ingresosEgresos: ingresoEgresoReducer,
+  //ingresosEgresos: ingresoEgresoReducer,
 };
